@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.model_selection import KFold
 from sklearn.base import BaseEstimator, RegressorMixin, TransformerMixin, clone
 
@@ -9,6 +10,10 @@ class StackingModels(BaseEstimator, RegressorMixin, TransformerMixin):
 		self.n_folds = n_folds
 
 	def fit(self, X, y):
+		if type(X) == pd.DataFrame:
+			X = X.values
+		if type(y) == pd.Series:
+			y = y.values
 		# self.base_models_是用来保存每折的训练模型，predect时对测试集使用
 		self.base_models_ = [list() for x in self.base_models]
 		self.meta_model_ = clone(self.meta_model)
@@ -48,5 +53,5 @@ class StackingModels(BaseEstimator, RegressorMixin, TransformerMixin):
 # # 传入融合模型列表、元模型、折数
 # sm = StackingModels(base_models, meta_model, n_folds=5)
 # # 将DataFrame转换为ndarray格式
-# sm.fit(train_X.get_values(),train_y.get_values())
-# tree_pred = sm.predict(test_X.get_values())
+# sm.fit(train_X,train_y)
+# tree_pred = sm.predict(test_X)
