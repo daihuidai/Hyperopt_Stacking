@@ -87,7 +87,7 @@ space_xgboost = {
     'colsample_bytree': hp.uniform('colsample_bytree', 0.6, 1.0)
 }
 space_lightgbm = {
-    'type': 'lightgbm',
+    'model_name': 'lightgbm',
     'n_estimators': hp.choice('n_estimators', range(50,501,2)),
     'learning_rate': hp.uniform('learning_rate', 0.01, 0.3),
     'max_depth': hp.choice('max_depth', range(2,8,1)),
@@ -98,3 +98,6 @@ space_lightgbm = {
     'colsample_bytree': hp.uniform('lgb_colsample_bytree', 0.6, 1.0),
     'reg_alpha': hp.uniform('reg_alpha', 0, 1.0)
 }
+
+spaces = [space_svm, space_knn, space_linear, space_xgboost, space_lightgbm]
+print(spaces)
